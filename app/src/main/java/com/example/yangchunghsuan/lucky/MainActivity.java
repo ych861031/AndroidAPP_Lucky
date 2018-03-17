@@ -1,5 +1,7 @@
 package com.example.yangchunghsuan.lucky;
 
+import android.accounts.AccountManagerCallback;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +32,28 @@ public class MainActivity extends AppCompatActivity {
         go.setEnabled(true);
     }
 
+    public void fn_nextPage(View v){
+        Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+        intent.putExtra("n",ranNum);
+        startActivityForResult(intent,111);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data == null){
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
 
+        switch (requestCode){
+            case 111:
+                int like = data.getIntExtra("Like",1);
+                if(like==1){
+                    textView.setText("Happy!");
+                }else{
+                    textView.setText("Try Again");
+                }
+                break;
+        }
+    }
 }
